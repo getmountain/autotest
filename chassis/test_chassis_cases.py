@@ -1,0 +1,11 @@
+import os
+os.chdir('/home/nvidia/work/data/autotest/Case_docker/Chassis/fault_inject/')
+os.system('python3 test_Fault_Inject.py')
+os.system('python3 test_Fault_Inject2.py')
+os.system('python3 test_Fault_Inject3.py')
+os.system('python3 test_Fault_Inject4.py')
+os.system('python3 test_Fault_Inject5.py')
+os.system('python3 test_Fault_Inject6.py')
+os.system('python3 test_Fault_Inject7.py')
+os.chdir('/home/nvidia/work/data/autotest/Case_docker/Chassis/State_Machine/')
+os.system('python3 test_State_Machine.py')

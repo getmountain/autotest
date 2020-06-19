@@ -1,0 +1,150 @@
+syntax = "proto2";
+
+package apollo.gr_module_detect;
+
+message ConfirmData{
+	required string name = 1;
+	required double reference_value = 2;
+	required double tolerance_range = 3;
+	optional bool 	positive = 4;
+};
+message NodeData{
+	enum MessageType {
+	    POINT_CLOUD = 1;
+	    VLP16_POINT_CLOUD = 58;
+	    GPS = 2;
+	    IMU = 3;
+	    CHASSIS = 4;
+	    LOCALIZATION = 5;
+	    PLANNING_TRAJECTORY = 6;
+	    MONITOR = 7;
+	    PAD = 8;
+	    CONTROL_COMMAND = 9;
+	    PREDICTION = 10;
+	    PERCEPTION_OBSTACLES = 11;
+	    TRAFFIC_LIGHT_DETECTION = 12;
+	    CHASSIS_DETAIL = 13;
+	    DECISION = 14 [deprecated = true];
+	    CANBUS = 15;
+	    ROUTING_REQUEST = 16;
+	    ROUTING_RESPONSE = 17;
+	    RELATIVE_ODOMETRY = 18;
+	    INS_STAT = 19;
+	    HMI_COMMAND = 20 [deprecated = true];
+	    MOBILEYE = 21;
+	    DELPHIESR = 22;
+	    COMPRESSED_IMAGE = 23;
+	    SYSTEM_STATUS = 24;
+	    INS_STATUS = 25;
+	    GNSS_STATUS = 26;
+	    CONTI_RADAR = 27;
+	    IMAGE_SHORT = 28;
+	    IMAGE_LONG = 29;
+	    DRIVE_EVENT = 30;
+	    GNSS_RTK_OBS = 31;
+	    GNSS_RTK_EPH = 32;
+	    GNSS_BEST_POSE = 33;
+	    LOCALIZATION_MSF_GNSS = 34;
+	    LOCALIZATION_MSF_LIDAR = 35;
+	    LOCALIZATION_MSF_SINS_PVA = 36;
+	    RAW_IMU = 37;
+	    LOCALIZATION_MSF_STATUS = 38;
+	    STATIC_INFO = 39;
+	    RELATIVE_MAP = 40;
+	    NAVIGATION = 41;
+	    ULTRASONIC_RADAR = 42;
+	    AUDIO_CAPTURE = 43;
+	    IMAGE_FRONT = 45;
+	    PANDORA_POINT_CLOUD = 46;
+	    PANDORA_CAMERA_FRONT_COLOR = 47;
+	    PANDORA_CAMERA_RIGHT_GRAY = 48;
+	    PANDORA_CAMERA_LEFT_GRAY = 49;
+	    PANDORA_CAMERA_FRONT_GRAY = 50;
+	    PANDORA_CAMERA_BACK_GRAY = 51;
+	    PERCEPTION_LANE_MASK = 52;
+	    GUARDIAN = 53;
+	    GNSS_RAW_DATA = 54;
+	    STREAM_STATUS = 55;
+	    GNSS_HEADING = 56;
+	    RTCM_DATA = 57;
+	    RACOBIT_RADAR = 59;
+	    // veldoyne fusion configs
+	    POINT_CLOUD_DENSE = 60;
+	    POINT_CLOUD_DENSE_RAW = 61;
+	    VELODYNE_SCAN_DENSE = 62;
+
+	    POINT_CLOUD_SPARSE_1 = 63;
+	    POINT_CLOUD_SPARSE_RAW_1 = 64;
+	    VELODYNE_SCAN_SPARSE_1 = 65;
+
+	    POINT_CLOUD_SPARSE_2 = 66;
+	    POINT_CLOUD_SPARSE_RAW_2 = 67;
+	    VELODYNE_SCAN_SPARSE_2 = 68;
+
+	    POINT_CLOUD_SPARSE_3 = 69;
+	    POINT_CLOUD_SPARSE_RAW_3 = 70;
+	    VELODYNE_SCAN_SPARSE_3 = 71;
+
+	    CAMERA_IMAGE_LONG = 72;
+	    CAMERA_IMAGE_SHORT = 73;
+
+	    PLANNING_PAD = 74;
+
+	    LIN_CONTROL_COMMAND = 80;
+	    RES_CURRENT_STATE = 81;
+	    REQ_STATE_TRANSITION = 82;
+	    CMD_VEL = 83;
+	    ROS_IMU = 84;
+	    ULTRASOUND = 85;
+
+		//add for Geofence
+		EARTH_GPS = 86;
+		   
+		//add for ObstAnalyse
+		ULTANALYSE = 87;
+		GEO_FENCE = 88;
+		FENCE = 89;
+
+		//add for speedlimit
+		SPEEDLIMIT = 90;
+		STATE_MACHINE_STATE = 91;
+
+		//add for pose fusion 
+		GR_ODOM = 100;
+	    GR_IMU = 101;
+
+	    //add by LSY
+	    PLANNING = 102;
+	    ZED = 103;
+	    REMAIN = 104;
+	    ULTRASOUND_DOWN = 105;
+	    ULTRASENSOR_CONFIG = 106;
+        ULTRASENSOR_STATE = 107;
+        PLATFORM_GUARDIAN = 108;
+        GNSS_ODOMETRY = 109;
+        CONTROL_INFO = 110;
+        CHASSIS_SPEED_LIMIT = 111;
+        SWITCH_REQ = 112;
+        SWITCH_RES = 113;
+	  }
+	enum DetectType{
+		CALLBACK = 1;
+		ONTIMER = 2;
+	}
+	required string name = 1;
+	required MessageType type = 2; 	
+	required DetectType detect_type = 3;
+	required double delay_tolerance = 4;
+	repeated ConfirmData cfirm_data = 5;
+	optional string dev_name = 6;
+};
+
+message ModuleDataConfig{
+	repeated NodeData node = 1;
+	required string name = 2;
+};
+
+message GRMDManagerConfig{
+	repeated ModuleDataConfig config = 1;
+};
+

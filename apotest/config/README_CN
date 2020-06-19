@@ -1,0 +1,32 @@
+module name: gr_module_detect
+
+module name: gr_module_detect
+
+conf/adapter.conf:    Apollo APP 配置文件
+    只订阅主题，不发布主题
+
+conf/gr_module_detect.conf:　命令行参数配置文件
+
+        --gr_detect_module_name: 只探测指定模块，模块需要已经加入到配置文件中，不指定则探测config中配置的所有模块
+        --log_dir: 存放日志的路径
+        --gr_module_detect_freq: 探测频率，缺省为２秒
+        --gr_debug_level: x>4 终端输出全部信息;x=4:终端只输出除DEBUG外的其他所有信息;x=3:终端输出除DEBUG,INFO外的信息;x=2:只输出EORR信息到终端;x<2,无信息输出到终端;
+
+
+proto/detect_module_config.config:    根据模块的protobuffer定义格式配置模块
+proto/gr_detect_module_config.proto:    Protocol Buffer　格式定义文件
+    config: 一个需要探测的模块为一个config
+    name:    模块名称
+    node: 该模块需要订阅的主题和自己发布的主题的节点信息配置
+	name: 节点名称
+	type: APOLLO 中节点对应的类型，通过该类型查找topic
+	detect_type:  ONTIMER: 使用定时器去探测该节点，用于信息频率高的模块
+		　　CALLBACK: 使用回调函数来探测，用于信息频率低的模块
+	delay_tolerance:　信息超时时间
+	cfirm_data:　校验数据
+	　　　 a,name: 参数名称，通过该名称查找参考值和误差范围
+	　　　　b,reference_value:　参考值
+	　　　　c,tolerance_range: 误差范围
+       
+
+可以自己添加校验数据，通过name来获取添加的校验数据，在gr_detct_module_data.cc文件中的int GRMD_node_data::check_timer()中添加校验数据。
